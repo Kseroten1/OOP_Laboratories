@@ -2,10 +2,10 @@ package pl.gdynia.amw.oop.Lab3;
 
 public class Triangle extends Figure {
 
-    private float basis;
-    private float height;
-    private float sideB;
-    private float sideC;
+    private Float basis;
+    private Float height;
+    private Float sideB;
+    private Float sideC;
 
     public Triangle() {
 
