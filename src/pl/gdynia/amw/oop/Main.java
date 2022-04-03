@@ -1,11 +1,11 @@
 package pl.gdynia.amw.oop;
 
-import pl.gdynia.amw.oop.Lab3.Lab3;
+import pl.gdynia.amw.oop.Lab4.Lab4;
 
 public class Main {
 
     public static void main(String[] args) {
-        var lab = new Lab3();
+        var lab = new Lab4();
         lab.run();
     }
 
