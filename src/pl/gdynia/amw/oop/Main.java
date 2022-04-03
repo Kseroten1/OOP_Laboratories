@@ -8,5 +8,4 @@ public class Main {
         var lab = new Lab4();
         lab.run();
     }
-
 }

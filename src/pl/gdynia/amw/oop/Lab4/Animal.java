@@ -11,7 +11,7 @@ public abstract class Animal {
     public abstract void voice();
 
     public void printName() {
-        System.out.printf("Name of an animal is: %s%n",name);
+        System.out.printf("Name of an animal is: %s%n", name);
     }
 
     public void setName(String name) {

@@ -2,8 +2,7 @@ package pl.gdynia.amw.oop.Lab4;
 
 public class Lab4 {
 
-    public void run(){
-        Animal animal = new Animal("Zdzichu");
+    public void run() {
 
         Cat cat = new Cat("Mr.Hanks");
         cat.printName();
@@ -16,6 +15,5 @@ public class Lab4 {
         dog.setName("Mrs.Smith");
         dog.printName();
         dog.voice();
-
     }
 }
