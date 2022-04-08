@@ -18,6 +18,10 @@ public class Cat implements Animal {
         System.out.printf("Name of an Animal is: %s%n", name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
