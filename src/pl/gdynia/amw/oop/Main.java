@@ -1,6 +1,6 @@
 package pl.gdynia.amw.oop;
 
-import pl.gdynia.amw.oop.Lab4.Lab4;
+import pl.gdynia.amw.oop.lab4.Lab4;
 
 public class Main {
 
