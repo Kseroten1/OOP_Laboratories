@@ -1,4 +1,4 @@
-package pl.gdynia.amw.oop.Lab3;
+package pl.gdynia.amw.oop.lab3;
 
 public class Lab3 {
 
