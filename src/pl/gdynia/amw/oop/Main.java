@@ -1,11 +1,13 @@
 package pl.gdynia.amw.oop;
 
-import pl.gdynia.amw.oop.lab6.calendar.Lab6;
+import pl.gdynia.amw.oop.lab6.calendar.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        var lab = new Lab6();
-        lab.run();
+        final var calendar = new Calendar();
+        final var menu = new Menu(calendar);
+
+        menu.show();
     }
 }

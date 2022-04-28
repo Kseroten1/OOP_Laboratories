@@ -1,20 +1,30 @@
 package pl.gdynia.amw.oop.lab6.calendar;
 
-public class Meeting extends BasicEvent {
-    private final String place;
-    private final Integer hour;
+import java.util.Scanner;
 
-    public Meeting(String place, int day, int hour) {
-        this.place = place;
-        this.day = day;
-        this.hour = hour;
+public class Meeting extends BasicEvent {
+    private String place;
+
+    public Meeting(int id) {
+        super(id);
     }
 
-    public Integer getHour() {
-        return hour;
+    @Override
+    public String toString() {
+        return "Meeting : " +
+                "hour: " + hour +
+                ", ID=" + id +
+                ", Place: '" + place + '\'' +
+                ' ';
     }
 
     public String getPlace() {
         return place;
+    }
+
+    @Override
+    public void getAdditionalInput(Scanner scanner) {
+        System.out.println("At what place the meeting take place: ");
+        this.place = scanner.nextLine();
     }
 }

@@ -7,29 +7,36 @@ import java.util.Map;
 
 public class Calendar {
     //                dzień    lista wydarzeń
-    private final Map<Integer, List<Event>> events = new HashMap<>();
-    
+    private final Map<Integer, List<Event>> allDaysEvents = new HashMap<>();
+
     public void addEvent(final Event event) {
+        if (event == null) {
+            return;
+        }
         final int day = event.getDay();
 
-        if (!this.events.containsKey(day)) {
-            this.events.put(day, new ArrayList<>());
+        if (!this.allDaysEvents.containsKey(day)) {
+            this.allDaysEvents.put(day, new ArrayList<>());
         }
 
-        this.events.get(event.getDay()).add(event);
+        this.allDaysEvents.get(event.getDay()).add(event);
     }
 
-    public void deleteEvent(int day, int index) {
-        this.events.get(day).remove(index);
+    public void deleteEvent(int id) {
+        this.allDaysEvents.forEach((day, eventsInThatDay) -> eventsInThatDay.removeIf(event -> event.getId() == id));
     }
 
     public void showEvents(int day) {
-        for (var event:events.get(day)) {
-            System.out.println(event+" ");
+        if (getEvents(day).isEmpty()) {
+            System.out.println("There is no events in that day.");
+            return;
+        }
+        for (var event : allDaysEvents.get(day)) {
+            System.out.println(event + " ");
         }
     }
 
     public List<Event> getEvents(int day) {
-        return events.getOrDefault(day, new ArrayList<>());
+        return allDaysEvents.getOrDefault(day, new ArrayList<>());
     }
 }
