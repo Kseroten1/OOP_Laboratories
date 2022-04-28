@@ -4,7 +4,7 @@ public abstract class BasicEvent implements Event {
     protected int day = 0;
 
     public void makeUserPromptAboutEvent() {
-        System.out.println("Hey u fuvk");
+        System.out.println("Hey");
     }
 
     public int getDay() {
