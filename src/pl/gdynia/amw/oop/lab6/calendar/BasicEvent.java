@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public abstract class BasicEvent implements Event {
     protected int day;
-    protected int hour;
+    protected int hour; //LocalTime
     protected int id;
 
     public BasicEvent(int id) {
