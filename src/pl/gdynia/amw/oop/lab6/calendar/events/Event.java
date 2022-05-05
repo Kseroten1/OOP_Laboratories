@@ -1,15 +1,20 @@
-package pl.gdynia.amw.oop.lab6.calendar;
+package pl.gdynia.amw.oop.lab6.calendar.events;
 
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public interface Event {
     int getDay();
 
-    int getHour();
+    LocalTime getStartOfTheEvent();
+
+    int getId();
+
+    String getNote();
 
     boolean getUserInput(Scanner scanner);
 
     void getAdditionalInput(Scanner scanner);
 
-    int getId();
+
 }

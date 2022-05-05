@@ -1,5 +1,8 @@
 package pl.gdynia.amw.oop.lab6.calendar;
 
+import pl.gdynia.amw.oop.lab6.calendar.events.Event;
+import pl.gdynia.amw.oop.lab6.calendar.filters.Filter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,17 +29,29 @@ public class Calendar {
         this.allDaysEvents.forEach((day, eventsInThatDay) -> eventsInThatDay.removeIf(event -> event.getId() == id));
     }
 
-    public void showEvents(int day) {
-        if (getEvents(day).isEmpty()) {
-            System.out.println("There is no events in that day.");
-            return;
-        }
-        for (var event : allDaysEvents.get(day)) {
-            System.out.println(event + " ");
-        }
+    public void showEvents() {
+        allDaysEvents
+                .values()
+                .stream()
+                .flatMap(List::stream)
+                .forEach(System.out::println);
     }
 
-    public List<Event> getEvents(int day) {
-        return allDaysEvents.getOrDefault(day, new ArrayList<>());
+// line 53
+//    private boolean meetsRequirementsMultiple(Event event, List<Filter> filters) {
+//        for (var filter : filters) {
+//            if (!filter.meetsRequirements(event)) return false;
+//        }
+//        return true;
+//        }
+
+    public void showEventsFiltered(List<Filter> filters) {
+        allDaysEvents
+                .values()
+                .stream()
+                .flatMap(List::stream)
+                .filter(event -> filters.stream().allMatch(filter -> filter.meetsRequirements(event)))
+                .forEach(System.out::println);
+
     }
 }

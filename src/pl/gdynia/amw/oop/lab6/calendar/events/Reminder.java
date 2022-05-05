@@ -1,4 +1,4 @@
-package pl.gdynia.amw.oop.lab6.calendar;
+package pl.gdynia.amw.oop.lab6.calendar.events;
 
 import java.util.Scanner;
 
@@ -11,11 +11,7 @@ public class Reminder extends BasicEvent {
 
     @Override
     public String toString() {
-        return "Reminder : " +
-                "Hour: " + hour +
-                ", ID=" + id +
-                ", Reminds of: '" + aboutWhat + '\'' +
-                ' ';
+        return String.format(super.toString(), "Reminder", "Remind about what:" + this.aboutWhat);
     }
 
     public String getAboutWhat() {
@@ -25,6 +21,6 @@ public class Reminder extends BasicEvent {
     @Override
     public void getAdditionalInput(Scanner scanner) {
         System.out.println("Remind You about what: ");
-        this.aboutWhat = scanner.nextLine();
+        this.aboutWhat = scanner.useDelimiter("\n").next();
     }
 }

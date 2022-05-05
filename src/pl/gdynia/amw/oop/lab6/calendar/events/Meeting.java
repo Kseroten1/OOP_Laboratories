@@ -1,4 +1,4 @@
-package pl.gdynia.amw.oop.lab6.calendar;
+package pl.gdynia.amw.oop.lab6.calendar.events;
 
 import java.util.Scanner;
 
@@ -11,11 +11,7 @@ public class Meeting extends BasicEvent {
 
     @Override
     public String toString() {
-        return "Meeting : " +
-                "hour: " + hour +
-                ", ID=" + id +
-                ", Place: '" + place + '\'' +
-                ' ';
+        return String.format(super.toString(), "Meeting", "Place:" + this.place);
     }
 
     public String getPlace() {
@@ -25,6 +21,6 @@ public class Meeting extends BasicEvent {
     @Override
     public void getAdditionalInput(Scanner scanner) {
         System.out.println("At what place the meeting take place: ");
-        this.place = scanner.nextLine();
+        this.place = scanner.useDelimiter("\n").next();
     }
 }
