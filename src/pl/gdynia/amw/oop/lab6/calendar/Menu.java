@@ -1,9 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar;
 
-import pl.gdynia.amw.oop.lab6.calendar.events.Call;
-import pl.gdynia.amw.oop.lab6.calendar.events.Event;
-import pl.gdynia.amw.oop.lab6.calendar.events.Meeting;
-import pl.gdynia.amw.oop.lab6.calendar.events.Reminder;
+import pl.gdynia.amw.oop.lab6.calendar.events.*;
 import pl.gdynia.amw.oop.lab6.calendar.filters.*;
 
 import java.util.ArrayList;
