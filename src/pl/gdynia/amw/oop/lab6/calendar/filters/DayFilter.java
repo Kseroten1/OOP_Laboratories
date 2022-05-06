@@ -5,7 +5,7 @@ import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 import java.util.Scanner;
 
 public class DayFilter implements Filter {
-    private final int day;
+    private final Integer day;
 
     public DayFilter(Scanner scanner) {
         System.out.println("Provide day: ");

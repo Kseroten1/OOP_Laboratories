@@ -4,9 +4,9 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public abstract class BasicEvent implements Event {
-    protected int day;
+    protected Integer day;
     protected LocalTime startOfTheEvent;
-    protected int id;
+    protected Integer id;
     protected String note;
 
     public BasicEvent(int id) {

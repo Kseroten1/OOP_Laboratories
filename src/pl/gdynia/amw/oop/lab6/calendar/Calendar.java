@@ -52,6 +52,5 @@ public class Calendar {
                 .flatMap(List::stream)
                 .filter(event -> filters.stream().allMatch(filter -> filter.meetsRequirements(event)))
                 .forEach(System.out::println);
-
     }
 }
