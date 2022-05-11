@@ -1,5 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar.events;
 
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Meeting extends BasicEvent {
@@ -7,6 +8,14 @@ public class Meeting extends BasicEvent {
 
     public Meeting(int id) {
         super(id);
+    }
+
+    public Meeting(int id, String place, Integer day, LocalTime startOfTheEvent, String note) {
+        super(id);
+        this.place = place;
+        this.day = day;
+        this.startOfTheEvent = startOfTheEvent;
+        this.note = note;
     }
 
     @Override

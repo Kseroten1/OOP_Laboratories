@@ -5,11 +5,13 @@ import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 import java.util.Scanner;
 
 public class TypeOfClassFilter implements Filter {
-    private final String type;
+    private String type;
 
-    public TypeOfClassFilter(Scanner scanner) {
+    @Override
+    public TypeOfClassFilter getUserInput(Scanner scanner) {
         System.out.println("Provide type of event You want to search: ");
         type = scanner.next();
+        return this;
     }
 
     @Override

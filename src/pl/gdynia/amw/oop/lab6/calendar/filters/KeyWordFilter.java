@@ -5,11 +5,13 @@ import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 import java.util.Scanner;
 
 public class KeyWordFilter implements Filter {
-    private final String keyWord;
+    private String keyWord;
 
-    public KeyWordFilter(Scanner scanner) {
-        System.out.println("Provide keyword: ");
-        keyWord = scanner.next();
+    @Override
+    public KeyWordFilter getUserInput(Scanner scanner) {
+        System.out.println("Provide keyWord: ");
+        keyWord = scanner.useDelimiter("\n").next();
+        return this;
     }
 
     @Override
