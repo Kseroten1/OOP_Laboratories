@@ -14,6 +14,10 @@ public class Menu {
         this.promptMessage = promptMessage;
     }
 
+    public static Menu withMessage(String promptMessage){
+        return new Menu(promptMessage);
+    }
+
     public void addOption(MenuOption option) {
         menuOptions.put(lastMenuKey++, option);
     }

@@ -25,8 +25,9 @@ public class Main {
             calendar.addEvent(event);
         };
 
-        final var addEventMenu = new Menu("What type of event do you want to add: ");
-        addEventMenu.addOption("Meeting", createEventAction)
+        final var addEventMenu =  Menu
+                .withMessage("What type of event do you want to add: ")
+                .addOption("Meeting", createEventAction)
                 .addOption("Reminder", createEventAction)
                 .addOption("Call", createEventAction);
 
@@ -48,8 +49,9 @@ public class Main {
             filtersMenu.show();
         };
 
-        final var menu = new Menu("What do you want to do: ");
-        menu.addOption("Add Event", addEventMenu::show)
+        final var menu = Menu
+                .withMessage("What do you want to do: ")
+                .addOption("Add Event", addEventMenu::show)
                 .addOption("Delete Event", () -> {
                     System.out.println("Enter the id of an event to delete: ");
                     calendar.deleteEvent(scanner.nextInt());
