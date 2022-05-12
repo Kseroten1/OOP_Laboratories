@@ -2,7 +2,6 @@ package pl.gdynia.amw.oop;
 
 import pl.gdynia.amw.oop.lab6.calendar.*;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
-import pl.gdynia.amw.oop.lab6.calendar.events.Meeting;
 import pl.gdynia.amw.oop.lab6.calendar.filters.*;
 import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionActionParameterless;
 import pl.gdynia.amw.oop.lab6.calendar.menu.Menu;
@@ -11,7 +10,6 @@ import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +23,7 @@ public class Main {
             calendar.addEvent(event);
         };
 
-        final var addEventMenu =  Menu
+        final var addEventMenu = Menu
                 .withMessage("What type of event do you want to add: ")
                 .addOption("Meeting", createEventAction)
                 .addOption("Reminder", createEventAction)
@@ -35,15 +33,23 @@ public class Main {
             List<Filter> filters = new ArrayList<>();
 
             final var filtersMenu = new Menu("What filter do you want to add: ");
-            final Function<Filter, MenuOptionActionParameterless> addFilterAndShowMenu = (filter) -> () -> {
-                filters.add(filter.getUserInput(scanner));
-                filtersMenu.show();
-            };
 
-            filtersMenu.addOption("Filter by Type of event", addFilterAndShowMenu.apply(new TypeOfClassFilter()))
-                    .addOption("Filter by starting hour", addFilterAndShowMenu.apply(new StartingHourFilter()))
-                    .addOption("Filter by key word", addFilterAndShowMenu.apply(new KeyWordFilter()))
-                    .addOption("Filter by day of event", addFilterAndShowMenu.apply(new DayFilter()))
+            filtersMenu.addOption("Filter by Type of event", () -> {
+                        filters.add(new TypeOfClassFilter(scanner));
+                        filtersMenu.show();
+                    })
+                    .addOption("Filter by starting hour", () -> {
+                        filters.add(new StartingHourFilter(scanner));
+                        filtersMenu.show();
+                    })
+                    .addOption("Filter by key word", () -> {
+                        filters.add(new KeyWordFilter(scanner));
+                        filtersMenu.show();
+                    })
+                    .addOption("Filter by day of event", () -> {
+                        filters.add(new DayFilter(scanner));
+                        filtersMenu.show();
+                    })
                     .addOption("That's all", () -> calendar.showEventsFiltered(filters));
 
             filtersMenu.show();

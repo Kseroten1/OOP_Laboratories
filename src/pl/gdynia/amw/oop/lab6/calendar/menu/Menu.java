@@ -14,7 +14,7 @@ public class Menu {
         this.promptMessage = promptMessage;
     }
 
-    public static Menu withMessage(String promptMessage){
+    public static Menu withMessage(String promptMessage) {
         return new Menu(promptMessage);
     }
 

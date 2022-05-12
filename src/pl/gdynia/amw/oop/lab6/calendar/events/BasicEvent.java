@@ -1,5 +1,7 @@
 package pl.gdynia.amw.oop.lab6.calendar.events;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
+
 import java.time.LocalTime;
 import java.util.Scanner;
 
@@ -18,18 +20,30 @@ public abstract class BasicEvent implements Event {
         return "%s#" + this.id + " Day:" + this.day + " Starting time:" + this.startOfTheEvent + " %s (" + this.note + ")";
     }
 
-    public boolean getUserInput(Scanner scanner) {
-        System.out.println("What day the event take place: ");
-        this.day = scanner.nextInt();
-        if (!isDayValid(day)) {
-            System.out.println("INVALID DAY!!!");
-            return false;
-        }
-        System.out.println("At what hour the event start: ");
-        this.startOfTheEvent = LocalTime.of(scanner.nextInt(), 0);
-        System.out.println("Note of the event: ");
-        this.note = scanner.useDelimiter("\n").next();
-        return true;
+    public void getUserInput(Scanner scanner) {
+        ConditionalDataProvider<Integer> dayProvider = new ConditionalDataProvider<>(
+                "What day the event take place:",
+                () -> Integer.parseInt(scanner.next()),
+                day -> day > 0 && day <= 31,
+                "Invalid day"
+        );
+        this.day = dayProvider.provide();
+
+        ConditionalDataProvider<Integer> hourProvider = new ConditionalDataProvider<>(
+                "At what hour the event start: ",
+                () -> Integer.parseInt(scanner.next()),
+                hour -> hour >= 0 && hour <= 24,
+                "Invalid hour"
+        );
+        this.startOfTheEvent = LocalTime.of(hourProvider.provide(), 0);
+
+        ConditionalDataProvider<String> noteProvider = new ConditionalDataProvider<>(
+                "Note of the event: ",
+                () -> scanner.useDelimiter("\n").next(),
+                note -> !note.trim().isEmpty(),
+                "Note cannot be empty"
+        );
+        this.note = noteProvider.provide();
     }
 
     public int getDay() {
@@ -46,9 +60,5 @@ public abstract class BasicEvent implements Event {
 
     public String getNote() {
         return this.note;
-    }
-
-    public Boolean isDayValid(int day) {
-        return day >= 1 && day <= 31;
     }
 }

@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class KeyWordFilter implements Filter {
     private String keyWord;
 
+    public KeyWordFilter(Scanner scanner) {
+        this.getUserInput(scanner);
+    }
+
     @Override
     public KeyWordFilter getUserInput(Scanner scanner) {
         System.out.println("Provide keyWord: ");

@@ -1,6 +1,7 @@
 package pl.gdynia.amw.oop.lab6.calendar.events;
 
-import java.time.LocalTime;
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
+
 import java.util.Scanner;
 
 public class Meeting extends BasicEvent {
@@ -8,14 +9,6 @@ public class Meeting extends BasicEvent {
 
     public Meeting(int id) {
         super(id);
-    }
-
-    public Meeting(int id, String place, Integer day, LocalTime startOfTheEvent, String note) {
-        super(id);
-        this.place = place;
-        this.day = day;
-        this.startOfTheEvent = startOfTheEvent;
-        this.note = note;
     }
 
     @Override
@@ -29,7 +22,12 @@ public class Meeting extends BasicEvent {
 
     @Override
     public void getAdditionalInput(Scanner scanner) {
-        System.out.println("At what place the meeting take place: ");
-        this.place = scanner.useDelimiter("\n").next();
+        ConditionalDataProvider<String> placeProvider = new ConditionalDataProvider<>(
+                "What place will the meeting take place: ",
+                () -> scanner.useDelimiter("\n").next(),
+                place -> Character.isUpperCase(place.charAt(0)),
+                "Invalid place"
+        );
+        this.place = placeProvider.provide();
     }
 }

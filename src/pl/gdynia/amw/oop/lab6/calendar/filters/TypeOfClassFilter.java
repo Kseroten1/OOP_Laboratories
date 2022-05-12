@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class TypeOfClassFilter implements Filter {
     private String type;
 
+    public TypeOfClassFilter(Scanner scanner) {
+        this.getUserInput(scanner);
+    }
+
     @Override
     public TypeOfClassFilter getUserInput(Scanner scanner) {
         System.out.println("Provide type of event You want to search: ");

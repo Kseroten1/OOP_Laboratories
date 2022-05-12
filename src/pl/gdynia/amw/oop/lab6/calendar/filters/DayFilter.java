@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class DayFilter implements Filter {
     private Integer day;
 
+    public DayFilter(Scanner scanner) {
+        this.getUserInput(scanner);
+    }
+
     @Override
     public DayFilter getUserInput(Scanner scanner) {
         System.out.println("Provide day: ");

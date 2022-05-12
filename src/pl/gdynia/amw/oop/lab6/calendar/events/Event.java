@@ -12,7 +12,7 @@ public interface Event {
 
     String getNote();
 
-    boolean getUserInput(Scanner scanner);
+    void getUserInput(Scanner scanner);
 
     void getAdditionalInput(Scanner scanner);
 

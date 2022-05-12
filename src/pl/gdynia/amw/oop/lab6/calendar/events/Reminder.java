@@ -1,5 +1,7 @@
 package pl.gdynia.amw.oop.lab6.calendar.events;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
+
 import java.util.Scanner;
 
 public class Reminder extends BasicEvent {
@@ -20,7 +22,12 @@ public class Reminder extends BasicEvent {
 
     @Override
     public void getAdditionalInput(Scanner scanner) {
-        System.out.println("Remind You about what: ");
-        this.aboutWhat = scanner.useDelimiter("\n").next();
+        ConditionalDataProvider<String> aboutWhatProvider = new ConditionalDataProvider<>(
+                "Remind You of what: ",
+                () -> scanner.useDelimiter("\n").next(),
+                aboutWhat -> aboutWhat.trim().isEmpty(),
+                "Invalid reminder message"
+        );
+        this.aboutWhat = aboutWhatProvider.provide();
     }
 }
