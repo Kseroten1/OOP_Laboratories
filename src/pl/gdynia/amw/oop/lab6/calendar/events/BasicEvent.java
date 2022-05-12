@@ -21,29 +21,26 @@ public abstract class BasicEvent implements Event {
     }
 
     public void getUserInput(Scanner scanner) {
-        ConditionalDataProvider<Integer> dayProvider = new ConditionalDataProvider<>(
+        this.day = ConditionalDataProvider.get(
                 "What day the event take place:",
                 () -> Integer.parseInt(scanner.next()),
                 day -> day > 0 && day <= 31,
                 "Invalid day"
         );
-        this.day = dayProvider.provide();
 
-        ConditionalDataProvider<Integer> hourProvider = new ConditionalDataProvider<>(
-                "At what hour the event start: ",
-                () -> Integer.parseInt(scanner.next()),
-                hour -> hour >= 0 && hour <= 24,
-                "Invalid hour"
-        );
-        this.startOfTheEvent = LocalTime.of(hourProvider.provide(), 0);
+        this.startOfTheEvent = LocalTime.of(ConditionalDataProvider.get(
+                        "At what hour the event start: ",
+                        () -> Integer.parseInt(scanner.next()),
+                        hour -> hour >= 0 && hour <= 24,
+                        "Invalid hour"),
+                0);
 
-        ConditionalDataProvider<String> noteProvider = new ConditionalDataProvider<>(
+        this.note = ConditionalDataProvider.get(
                 "Note of the event: ",
                 () -> scanner.useDelimiter("\n").next(),
                 note -> !note.trim().isEmpty(),
                 "Note cannot be empty"
         );
-        this.note = noteProvider.provide();
     }
 
     public int getDay() {

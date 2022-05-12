@@ -1,5 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar.filters;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 
 import java.time.LocalTime;
@@ -14,8 +15,11 @@ public class StartingHourFilter implements Filter {
 
     @Override
     public StartingHourFilter getUserInput(Scanner scanner) {
-        System.out.println("Provide type of event You want to search: ");
-        hour = LocalTime.of(scanner.nextInt(), 0);
+        hour = LocalTime.of(ConditionalDataProvider.get( "Provide hour: ",
+                () -> Integer.parseInt(scanner.next()),
+                hour -> hour > 0 && hour < 31,
+                "Provide correct day!"
+        ), 0);
         return this;
     }
 

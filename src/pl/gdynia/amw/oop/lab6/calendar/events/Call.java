@@ -12,6 +12,10 @@ public class Call extends BasicEvent {
         super(id);
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
     @Override
     public String toString() {
         return String.format(super.toString(), "Call", "Phone number:" + this.phone);
@@ -19,13 +23,12 @@ public class Call extends BasicEvent {
 
     @Override
     public void getAdditionalInput(Scanner scanner) {
-        ConditionalDataProvider<String> numberProvider = new ConditionalDataProvider<>(
+        this.phone = ConditionalDataProvider.get(
                 "Number of the caller: ",
                 () -> scanner.useDelimiter("\n").next(),
                 phone -> phone.trim().chars().allMatch(Character::isDigit),
                 "Invalid number"
         );
-        this.phone = numberProvider.provide();
     }
 
 }
