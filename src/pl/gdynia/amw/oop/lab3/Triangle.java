@@ -17,7 +17,7 @@ public class Triangle extends Figure {
             if (basis + sideB > sideC && basis + sideC > sideB && sideB + sideC > basis) {
                 System.out.printf("SurfaceArea of the triangle = %f%n", height * basis / 2);
             } else {
-                System.out.println("This sides can't create a triangle");
+                System.out.println("This sides can't get a triangle");
             }
         } else {
             System.out.println("Values of sides, and height should be set to a positive number");
@@ -30,7 +30,7 @@ public class Triangle extends Figure {
             if (basis + sideB > sideC && basis + sideC > sideB && sideB + sideC > basis) {
                 System.out.printf("Circuit of the triangle = %f%n", basis + sideB + sideC);
             } else {
-                System.out.println("This sides can't create a triangle");
+                System.out.println("This sides can't get a triangle");
             }
         } else {
             System.out.println("Values of sides must be set to a positive number");

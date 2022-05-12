@@ -1,5 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar.filters;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 
 import java.util.Scanner;
@@ -13,8 +14,11 @@ public class DayFilter implements Filter {
 
     @Override
     public DayFilter getUserInput(Scanner scanner) {
-        System.out.println("Provide day: ");
-        day = scanner.nextInt();
+        day = ConditionalDataProvider.get( "Provide day: ",
+                () -> Integer.parseInt(scanner.next()),
+                day -> day > 0 && day < 31,
+                "Provide correct day!"
+        );
         return this;
     }
 

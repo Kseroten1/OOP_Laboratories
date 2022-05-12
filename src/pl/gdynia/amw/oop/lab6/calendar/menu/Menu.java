@@ -1,5 +1,7 @@
 package pl.gdynia.amw.oop.lab6.calendar.menu;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -33,18 +35,16 @@ public class Menu {
     }
 
     public int show() {
-        System.out.println(promptMessage);
+        System.out.printf("%n%n[?] %s%n", promptMessage);
         this.menuOptions.forEach((optionId, option) -> System.out.printf("[%d] %s%n", optionId, option.getText()));
-        System.out.print("Your decision: ");
-        try {
-            int decision = Integer.parseInt(scanner.next());
-            if (decision >= lastMenuKey || decision < 1) throw new ArrayIndexOutOfBoundsException();
-            menuOptions.get(decision).invokeAction(decision);
-            return decision;
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
-            System.out.printf("Provide correct decision! <1,%d>%n", lastMenuKey - 1);
-            this.show();
-        }
-        return -1;
+
+        final var decision = ConditionalDataProvider.get( "Your decision: ",
+                () -> Integer.parseInt(scanner.useDelimiter("\n").next()),
+                test -> test < lastMenuKey && test > 0,
+                String.format("Provide correct decision! <1,%d>%n", lastMenuKey - 1)
+            );
+
+        menuOptions.get(decision).invokeAction(decision);
+        return decision;
     }
 }

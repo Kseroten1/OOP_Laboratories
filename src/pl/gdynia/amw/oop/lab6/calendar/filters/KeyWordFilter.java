@@ -1,5 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar.filters;
 
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 
 import java.util.Scanner;
@@ -13,8 +14,11 @@ public class KeyWordFilter implements Filter {
 
     @Override
     public KeyWordFilter getUserInput(Scanner scanner) {
-        System.out.println("Provide keyWord: ");
-        keyWord = scanner.useDelimiter("\n").next();
+        keyWord = ConditionalDataProvider.get( "Provide keyWord: ",
+                () -> scanner.useDelimiter("\n").next(),
+                keyWord -> !keyWord.trim().isEmpty(),
+                "Provide correct keyWord!"
+        );
         return this;
     }
 

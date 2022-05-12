@@ -62,4 +62,16 @@ public class Calendar {
             System.out.println("No matching results");
         }
     }
+
+    public Map<Integer, List<Event>> getAllDaysEvents() {
+        return allDaysEvents;
+    }
+
+    public boolean hasEvent(int id) {
+        return true;
+    }
+
+    public String getEventsIds() {
+        return "";
+    }
 }

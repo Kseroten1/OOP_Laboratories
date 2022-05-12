@@ -22,12 +22,11 @@ public class Reminder extends BasicEvent {
 
     @Override
     public void getAdditionalInput(Scanner scanner) {
-        ConditionalDataProvider<String> aboutWhatProvider = new ConditionalDataProvider<>(
+        this.aboutWhat = ConditionalDataProvider.get(
                 "Remind You of what: ",
                 () -> scanner.useDelimiter("\n").next(),
-                aboutWhat -> aboutWhat.trim().isEmpty(),
+                aboutWhat -> !aboutWhat.trim().isEmpty(),
                 "Invalid reminder message"
         );
-        this.aboutWhat = aboutWhatProvider.provide();
     }
 }

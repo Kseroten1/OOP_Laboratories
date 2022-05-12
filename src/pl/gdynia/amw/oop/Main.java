@@ -1,6 +1,7 @@
 package pl.gdynia.amw.oop;
 
 import pl.gdynia.amw.oop.lab6.calendar.*;
+import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 import pl.gdynia.amw.oop.lab6.calendar.filters.*;
 import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionActionParameterless;
@@ -8,8 +9,10 @@ import pl.gdynia.amw.oop.lab6.calendar.menu.Menu;
 import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionAction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -59,8 +62,12 @@ public class Main {
                 .withMessage("What do you want to do: ")
                 .addOption("Add Event", addEventMenu::show)
                 .addOption("Delete Event", () -> {
-                    System.out.println("Enter the id of an event to delete: ");
-                    calendar.deleteEvent(scanner.nextInt());
+                    calendar.deleteEvent(ConditionalDataProvider.get(
+                            "Enter the id of an event to delete: ",
+                            () -> Integer.parseInt(scanner.next()),
+                            id -> calendar.hasEvent(id),
+                            String.format("Provide one of %s", calendar.getEventsIds())
+                    ));
                 })
                 .addOption("View events", calendar::showEvents)
                 .addOption("View filtered", viewFilteredAction)
