@@ -20,7 +20,7 @@ public class Calendar {
         if (type == 1) return new Meeting(lastId++);
         if (type == 2) return new Reminder(lastId++);
         if (type == 3) return new Call(lastId++);
-        throw new Error("Incorrect event type");
+        throw new IllegalArgumentException("Incorrect event type");
     }
 
     public void addEvent(final Event event) {
@@ -68,10 +68,12 @@ public class Calendar {
     }
 
     public boolean hasEvent(int id) {
-        return true;
+        return allDaysEvents.containsKey(id);
     }
 
     public String getEventsIds() {
-        return "";
+        return allDaysEvents.keySet().stream()
+                .map(events -> events + " ")
+                .collect(Collectors.joining(","));
     }
 }
