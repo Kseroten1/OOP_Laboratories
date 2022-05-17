@@ -1,21 +1,38 @@
 package pl.gdynia.amw.oop;
 
-import pl.gdynia.amw.oop.lab6.calendar.*;
+import pl.gdynia.amw.oop.lab6.calendar.Calendar;
 import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 import pl.gdynia.amw.oop.lab6.calendar.events.Event;
 import pl.gdynia.amw.oop.lab6.calendar.filters.*;
-import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionActionParameterless;
 import pl.gdynia.amw.oop.lab6.calendar.menu.Menu;
 import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionAction;
+import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionActionParameterless;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    final static Path path = Path.of(System.getProperty("user.home"), "java", "calendar");
+    final static File file = path.resolve("calendar.txt").toFile();
+
+    static {
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         final var calendar = new Calendar();
+        calendar.load(new ObjectInputStream(new FileInputStream(file)));
+
+        calendar.showThreeClosest();
 
         final MenuOptionAction createEventAction = (chosenMenuKey) -> {
             Event event = calendar.createEvent(chosenMenuKey);
@@ -63,7 +80,7 @@ public class Main {
                     calendar.deleteEvent(ConditionalDataProvider.get(
                             "Enter the id of an event to delete: ",
                             () -> Integer.parseInt(scanner.next()),
-                            id -> calendar.hasEvent(id),
+                            calendar::hasEvent,
                             String.format("Provide one of %s", calendar.getEventsIds())
                     ));
                 })
@@ -73,5 +90,6 @@ public class Main {
 
         while (menu.show() != 5) {
         }
+        calendar.save(new ObjectOutputStream((new FileOutputStream(file))));
     }
 }

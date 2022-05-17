@@ -6,17 +6,21 @@ import pl.gdynia.amw.oop.lab6.calendar.events.Meeting;
 import pl.gdynia.amw.oop.lab6.calendar.events.Reminder;
 import pl.gdynia.amw.oop.lab6.calendar.filters.Filter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Calendar {
     private final Map<Integer, List<Event>> allDaysEvents = new HashMap<>();
     private Integer lastId = 0;
 
-    public Event createEvent(int type) {
+    public Event createEvent(int type) throws IllegalArgumentException {
         if (type == 1) return new Meeting(lastId++);
         if (type == 2) return new Reminder(lastId++);
         if (type == 3) return new Call(lastId++);
@@ -63,17 +67,47 @@ public class Calendar {
         }
     }
 
-    public Map<Integer, List<Event>> getAllDaysEvents() {
-        return allDaysEvents;
+    public void showThreeClosest() {
+        Integer today = LocalDate.now().getDayOfMonth();
+        System.out.printf("Today is: %s%n", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(LocalDateTime.now()));
+        System.out.println("Closest Events:");
+
+        allDaysEvents
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() >= today)
+                .map(Map.Entry::getValue)
+                .flatMap(Collection::stream)
+                .filter(event -> event.getDay() > today || (event.getDay() == today && event.getStartOfTheEvent().isAfter(LocalTime.now())))
+                .sorted(Comparator.comparingInt(Event::getDay).thenComparing(Event::getStartOfTheEvent))
+                .limit(3)
+                .forEach(System.out::println);
     }
 
     public boolean hasEvent(int id) {
-        return allDaysEvents.containsKey(id);
+        return allDaysEvents
+                .values()
+                .stream()
+                .flatMap(Collection::stream)
+                .anyMatch(event -> event.getId() == id);
     }
 
     public String getEventsIds() {
-        return allDaysEvents.keySet().stream()
-                .map(events -> events + " ")
-                .collect(Collectors.joining(","));
+        return allDaysEvents
+                .values()
+                .stream()
+                .flatMap(Collection::stream)
+                .map(Event::getId)
+                .map(Object::toString)
+                .collect(Collectors.joining(",  "));
+    }
+
+    public void save(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(allDaysEvents);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void load(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        allDaysEvents.putAll((Map<Integer, List<Event>>) stream.readObject());
     }
 }

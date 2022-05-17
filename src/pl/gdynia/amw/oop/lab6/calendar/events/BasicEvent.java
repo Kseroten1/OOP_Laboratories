@@ -31,7 +31,7 @@ public abstract class BasicEvent implements Event {
         this.startOfTheEvent = LocalTime.of(ConditionalDataProvider.get(
                         "At what hour the event start: ",
                         () -> Integer.parseInt(scanner.next()),
-                        hour -> hour >= 0 && hour <= 24,
+                        hour -> hour >= 0 && hour <= 23,
                         "Invalid hour"),
                 0);
 
@@ -43,6 +43,7 @@ public abstract class BasicEvent implements Event {
         );
     }
 
+
     public int getDay() {
         return this.day;
     }
@@ -51,7 +52,7 @@ public abstract class BasicEvent implements Event {
         return this.startOfTheEvent;
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
