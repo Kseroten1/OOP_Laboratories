@@ -33,7 +33,7 @@ public class ConditionalDataProvider<T> implements DataProvider<T> {
                 } else {
                     System.out.printf("[!] %s%n", incorrectInput);
                 }
-            } catch (Exception ignored) {
+            } catch (Exception ignored) /*jawna weryfikacja wyjatkow + obsluga ich*/{
                 System.out.printf("[!] %s%n", incorrectInput);
             }
         }

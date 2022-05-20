@@ -2,6 +2,7 @@ package pl.gdynia.amw.oop.lab6.calendar.menu;
 
 import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -30,7 +31,13 @@ public class Menu {
     }
 
     public Menu addOption(String text, MenuOptionActionParameterless function) {
-        this.addOption(new MenuOption(text, (ignored) -> function.invoke()));
+        this.addOption(new MenuOption(text, (ignored) -> {
+            try {
+                function.invoke();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }));
         return this;
     }
 

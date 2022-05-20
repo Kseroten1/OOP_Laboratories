@@ -30,7 +30,9 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         final var calendar = new Calendar();
+
         calendar.load(new ObjectInputStream(new FileInputStream(file)));
+
 
         calendar.showThreeClosest();
 
@@ -74,19 +76,23 @@ public class Main {
         };
 
         final var menu = Menu
-                .withMessage("What do you want to do: ")
-                .addOption("Add Event", addEventMenu::show)
-                .addOption("Delete Event", () -> {
-                    calendar.deleteEvent(ConditionalDataProvider.get(
-                            "Enter the id of an event to delete: ",
-                            () -> Integer.parseInt(scanner.next()),
-                            calendar::hasEvent,
-                            String.format("Provide one of %s", calendar.getEventsIds())
-                    ));
-                })
-                .addOption("View events", calendar::showEvents)
-                .addOption("View filtered", viewFilteredAction)
-                .addOption("EXIT", MenuOptionActionParameterless.EMPTY);
+                .withMessage("What do you want to do: ");
+        menu.addOption("Add Event", () -> {
+                    addEventMenu.show();
+                    calendar.save(new ObjectOutputStream((new FileOutputStream(file))));
+        });
+        menu.addOption("Delete Event", () -> {
+            calendar.deleteEvent(ConditionalDataProvider.get(
+                    "Enter the id of an event to delete: ",
+                    () -> Integer.parseInt(scanner.next()),
+                    calendar::hasEvent,
+                    String.format("Provide one of %s", calendar.getEventsIds())
+            ));
+            calendar.save(new ObjectOutputStream((new FileOutputStream(file))));
+        });
+        menu.addOption("View events", calendar::showEvents);
+        menu.addOption("View filtered", viewFilteredAction);
+        menu.addOption("EXIT", MenuOptionActionParameterless.EMPTY);
 
         while (menu.show() != 5) {
         }
