@@ -1,9 +1,6 @@
 package pl.gdynia.amw.oop.lab6.calendar;
 
-import pl.gdynia.amw.oop.lab6.calendar.events.Call;
-import pl.gdynia.amw.oop.lab6.calendar.events.Event;
-import pl.gdynia.amw.oop.lab6.calendar.events.Meeting;
-import pl.gdynia.amw.oop.lab6.calendar.events.Reminder;
+import pl.gdynia.amw.oop.lab6.calendar.events.*;
 import pl.gdynia.amw.oop.lab6.calendar.filters.Filter;
 
 import java.io.IOException;
@@ -20,11 +17,11 @@ public class Calendar {
     private final Map<Integer, List<Event>> allDaysEvents = new HashMap<>();
     private Integer lastId = 0;
 
-    public Event createEvent(int type) throws IllegalArgumentException {
+    public Event createEvent(int type) throws IncorrectEventTypeException {
         if (type == 1) return new Meeting(lastId++);
         if (type == 2) return new Reminder(lastId++);
         if (type == 3) return new Call(lastId++);
-        throw new IllegalArgumentException("Incorrect event type");
+        throw new IncorrectEventTypeException(type);
     }
 
     public void addEvent(final Event event) {

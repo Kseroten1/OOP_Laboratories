@@ -9,6 +9,7 @@ import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionAction;
 import pl.gdynia.amw.oop.lab6.calendar.menu.MenuOptionActionParameterless;
 
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -22,8 +23,15 @@ public class Main {
     static {
         try {
             Files.createDirectories(path);
+        } catch (FileAlreadyExistsException ignored) {
+            System.out.printf("File already exists in place of directory: %s", path);
+            System.exit(420);
+        } catch (SecurityException ignored) {
+            System.out.println("Security problem, try running as an admin");
+            System.exit(2137);
         } catch (IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
     }
 
@@ -88,8 +96,7 @@ public class Main {
                 .addOption("View filtered", viewFilteredAction)
                 .addOption("EXIT", MenuOptionActionParameterless.EMPTY);
 
-        while (menu.show() != 5) {
-        }
+        while (menu.show() != 5) ;
         calendar.save(new ObjectOutputStream((new FileOutputStream(file))));
     }
 }
