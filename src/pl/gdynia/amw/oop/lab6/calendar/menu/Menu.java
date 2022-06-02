@@ -1,6 +1,7 @@
 package pl.gdynia.amw.oop.lab6.calendar.menu;
 
 import pl.gdynia.amw.oop.lab6.calendar.dataproviding.ConditionalDataProvider;
+import pl.gdynia.amw.oop.lab6.calendar.events.IncorrectEventTypeException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,13 +46,16 @@ public class Menu {
         System.out.printf("%n%n[?] %s%n", promptMessage);
         this.menuOptions.forEach((optionId, option) -> System.out.printf("[%d] %s%n", optionId, option.getText()));
 
-        final var decision = ConditionalDataProvider.get( "Your decision: ",
+        final var decision = ConditionalDataProvider.get("Your decision: ",
                 () -> Integer.parseInt(scanner.useDelimiter("\n").next()),
                 test -> test < lastMenuKey && test > 0,
                 String.format("Provide correct decision! <1,%d>%n", lastMenuKey - 1)
-            );
-
-        menuOptions.get(decision).invokeAction(decision);
+        );
+        try {
+            menuOptions.get(decision).invokeAction(decision);
+        } catch (IncorrectEventTypeException e) {
+            e.printStackTrace();
+        }
         return decision;
     }
 }
